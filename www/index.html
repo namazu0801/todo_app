@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.7/pwacompat.min.js"></script>
+  <script src="/js/jquery-1.12.4.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/db.js"></script>
+  <title>To-Do List</title>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function (err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
+  </script>
+</head>
+
+<body>
+    <div id="header-menu">
+        <div class="left">To-Do List</div>
+        <a href="/add_task.html"><div class="right btn-add-task">＋</div></a>
+        <div class="clear"></div>
+    </div>
+    <div class="left day-arrow prev">◀</div>
+    <div class="right day-arrow next">▶</div>
+    <p class="center date"></p>
+    <div class="clear"></div>
+    <table id="task-list">
+        <tr><td style="border:none;">
+            <img src="/images/loading.gif" style="width: 100%;" />
+        </td></tr>
+    </table>
+</body>
+<script>
+    function changeRowBgColor(){
+        $("#task-list .task").css("background-color", "#fff");
+        $("#task-list .task:has(div.check-kuma.checked)").css("background-color", "#eee");
+    }
+</script>
+<script>
+    var qDateStr = getParam("date") ? getParam("date") : getStringFromDate(new Date(),"YYYY-MM-DD");
+    var qDate = new Date(qDateStr)
+    var qDateStrJa = getStringFromDate(qDate, "YYYY年MM月DD日") + `（${dayOfWeekJa[qDate.getDay()]}）`;
+
+    $("p.date").html(qDateStrJa);
+
+    $(".day-arrow").on("click", function(){
+        if($(this).hasClass("prev")){
+            var prevDay = new Date(qDate.setDate(qDate.getDate() - 1));
+            var toDate = getStringFromDate(prevDay,"YYYY-MM-DD");
+        } else {
+            var nextDay = new Date(qDate.setDate(qDate.getDate() + 1));
+            var toDate = getStringFromDate(nextDay,"YYYY-MM-DD");
+        }
+        window.location.href = `/index.html?date=${toDate}`;
+    });
+
+    getTasksByDate(qDate, function(tasks){
+        var rowHTMLAll = "";
+        for(id in tasks){
+            var task = tasks[id]["data"];
+            var name = task["name"];
+            var persons = tasks[id]["persons"];
+            var minStatus = (persons && persons.indexOf("min")>=0) ? "checked" : "unchecked";
+            var munStatus = (persons && persons.indexOf("mun")>=0) ? "checked" : "unchecked";
+            var rowHTML = `
+                <tr><td class="task">
+                    <div class="left">${name}</div>
+                    <div class="right check-kuma mun ${munStatus}"></div>
+                    <div class="right check-kuma min ${minStatus}"></div>
+                    <div class="clear"></div>
+                    <input type="hidden" class="task-key" value="${id}" />
+                </td></tr>
+            `;
+            rowHTMLAll += rowHTML;
+        }
+        if(rowHTMLAll==="") rowHTMLAll = "<tr><td style='border: none'>タスクがありません</td></tr>";
+        $("#task-list").html(rowHTMLAll); 
+        changeRowBgColor();
+        $(".task").on("click", function(e){
+            var taskKey = $(this).find("input.task-key").val();
+            window.location.href = "edit_task.html?key=" + taskKey;
+        });
+        $(".check-kuma").on("click", function(e){
+            e.stopPropagation();
+            function callback($that, beforeStatus, afterStatus){
+                console.log($that, beforeStatus, afterStatus);
+                $that.removeClass(beforeStatus);
+                $that.addClass(afterStatus);
+                changeRowBgColor();
+            }
+
+            var taskKey = $(this).parent().find("input.task-key").eq(0).val();
+            var person = $(this).hasClass("min") ? "min" : "mun";
+
+            var $that = $(this);
+
+            if($(this).hasClass("unchecked"))
+                addDone(qDateStr, taskKey, person, function(){ callback($that, "unchecked", "checked"); });
+            else
+                removeDone(qDateStr, taskKey, person, function(){ callback($that, "checked", "unchecked"); });
+        });
+    });
+</script>
+
+</html>

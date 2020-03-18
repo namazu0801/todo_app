@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/pickadatejs/default.css">
+  <link rel="stylesheet" href="/css/pickadatejs/default.date.css">
+  <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.7/pwacompat.min.js"></script>
+  <script src="/js/jquery-1.12.4.min.js"></script>
+  <script src="/js/pickadatejs/legacy.js"></script>
+  <script src="/js/pickadatejs/picker.js"></script>
+  <script src="/js/pickadatejs/picker.date.js"></script>
+  <script src="/js/pickadatejs/lang-ja.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+  <script src="/js/common.js"></script>
+  <script src="/js/db.js"></script>
+  <title>To-Do List</title>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function (err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
+  </script>
+</head>
+<style>
+    .picker__weekday { text-align: center; }
+</style>
+<body>
+    <div id="header-menu">
+        <div class="left">To-Do List</div>
+        <a href="/index.html"><div class="right menu-right">×</div></a>
+        <div class="clear"></div>
+    </div>
+    <div class="page-wrapper">
+        <div class="form-group">
+            <label>タスク名</label>
+            <input type="text" class="form-control input-task" style="font-size:28px;height:60px;" />
+        </div>
+        <div class="form-group">
+            <label>日付</label>
+            <input type="text" class="form-control input-date" style="font-size:28px;height:60px;" />
+        </div>
+        <input type="checkbox" class="check-repeat" /> 繰り返す
+        <div class="form-group">
+            <select class="form-control select-repeat value"></select>
+            <select class="form-control select-repeat unit">
+                <option value="day">日</option>
+                <option value="week">週</option>
+                <option value="month">ヶ月</option>
+            </select>
+            ごとに行う
+        </div>
+        <br>
+        <div class="form-group">
+            <button class="btn btn-primary btn-add-task">登録</button>
+        </div>
+    </div>
+</body>
+</script>
+
+<script>
+    function changeRepeatInputsDisability(){
+        var $checkbox = $(".check-repeat");
+        if($checkbox.prop("checked")) var disable = false;
+        else var disable = true;
+
+        $(".select-repeat").prop("disabled", disable);
+    }
+
+    $(".input-date").pickadate();
+    $(".input-date").val(getStringFromDate(new Date(),"YYYY-MM-DD"));
+    for(var i=1; i<100; i++) $(".select-repeat.value").append(`<option value="${i}">${i}</option>`);
+    changeRepeatInputsDisability();
+
+    $(".check-repeat").on("click", changeRepeatInputsDisability);
+    $(".btn-add-task").on("click", function(){
+        var saveData = {};
+        saveData["name"] = $(".input-task").val();
+        saveData["date"] = $(".input-date").val();
+        saveData["createdDate"] = new Date();
+        if($(".select-repeat").prop("disabled") == false){
+            saveData["repeatUnit"] = $(".select-repeat.unit").val();
+            saveData["repeatValue"] = parseInt($(".select-repeat.value").val());
+            saveData["monthlyRepeatDay"] = saveData["repeatUnit"]=="month" ? parseInt(saveData["date"].split("-")[2],10) : null;
+        } else {
+            saveData["repeatUnit"] = null;
+            saveData["repeatValue"] = null;
+            saveData["monthlyRepeatDay"] = null;
+        }
+        addTask(saveData);
+    });
+</script>
+
+</html>

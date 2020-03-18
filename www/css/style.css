@@ -1,0 +1,94 @@
+/* global */
+body {
+    font-size: 40px !important;
+    margin: 0;
+    padding: 0;
+    font-family: "ＭＳ ゴシック",sans-serif;
+}
+.left { float: left; }
+.right { float: right; }
+.clear { clear: both; }
+p.center {
+    width: 100%;
+    text-align: center;
+}
+.page-wrapper {
+    width: 100%;
+    padding: 30px 40px;
+    box-sizing: border-box;
+}
+#header-menu {
+    width: 100%;
+    background-color: #8bd;
+    color: white;
+    font-weight: bold;
+    padding: 15px 40px;
+    box-sizing: border-box;
+    line-height: 100px;
+}
+div.menu-right {
+    font-size: 60px;
+}
+h1.title {
+    text-align: center;
+}
+
+/* main */
+
+div.day-arrow {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+#task-list {
+    border-collapse: collapse;
+    width: 100%;
+}
+#task-list .task {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 20px 40px;
+    height: 150px;
+    line-height: 150px;
+}
+div.check-kuma {
+    padding: 0 10px;
+}
+div.check-kuma:before {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+    width: 130px;
+    height: 100px;
+    content: '';
+    display: inline-block;
+}
+div.check-kuma:before img { width: 100%; }
+div.check-kuma.unchecked:before {
+    opacity: 0.3;
+    filter: grayscale(1);
+}
+div.check-kuma.min:before { background-image: url("/images/minkuma.png"); }
+div.check-kuma.mun:before { background-image: url("/images/munkuma.png"); }
+
+
+/* add-task */
+
+.form-control {
+    font-size: 28px !important;
+    height: 60px !important;
+}
+.picker__input { background-color: #fff !important; }
+.btn {
+    font-size: 36px !important;
+    height: 80px !important;
+    padding: 0 30px !important;
+}
+.select-repeat { 
+    width: 20% !important;
+    display: inline !important;
+}
+.btn-add-task {
+}
