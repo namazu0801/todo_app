@@ -19,7 +19,7 @@ var db = firebase.firestore();
 var CLCT_TASK = "tasks";
 var CLCT_DN = "dones";
 
-function addTask(data){
+function addTask(data, taskKey=null){
     /*
         [form input] data ...
             name: string
@@ -50,19 +50,25 @@ function addTask(data){
     saveData["monthlyRepeatDay"] = data.monthlyRepeatDay;
     saveData["monthlyRepeatMonths"] = data.monthlyRepeatDay ? data.repeatValue : null;
 
-    console.log(saveData);
-    //db.ref(CLCT_TASK).push(saveData)
-    db.collection(CLCT_TASK).add(saveData)
-    .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id);
+    function callbackSuccess(docRef){
+        //console.log("Document written with ID: ", docRef.id);
         console.log(saveData);
         alert("登録しました");
-        //window.location.reload();
-    })
-    .catch(function(error) {
+        window.location.reload();
+    }
+    function callbackError(error) {
         console.error("Error adding document: ", error);
         console.log(saveData);
         alert("error occurred: see console");
+    }
+
+    if(taskKey) db.collection(CLCT_TASK).doc(taskKey).set(saveData).then(callbackSuccess).catch(callbackError);
+    else db.collection(CLCT_TASK).add(saveData).then(callbackSuccess).catch(callbackError);
+}
+
+function getTask(key, callback){
+    db.collection(CLCT_TASK).doc(key).get().then(function(doc){
+        callback(doc.data());
     });
 }
 
@@ -78,7 +84,8 @@ function getTasksByDate(qDate, callback){
         if(!docs.empty){
             docs.forEach(function(doc){
                 var taskKey = doc.id.split(":")[1];
-                tasks[taskKey] = { "persons": Object.keys(doc.data()) };
+                var persons = Object.keys(doc.data());
+                if(persons.length) tasks[taskKey] = { "persons": persons };
             });
         }
 
@@ -90,13 +97,12 @@ function getTasksByDate(qDate, callback){
                     var d = doc.data();
                     var regDate = d["date"].toDate();
                     var dateDiff = dayDiff(regDate,qDate);
-                    var isRepeatedTask = (d["repeatDays"] || d["monthlyRepeatMonths"]);
-                    var repeatToday = (isRepeatedTask && (dateDiff % d["repeatDays"] == 0));
+                    var repeatToday = (isRepeatedTask(d) && (dateDiff % d["repeatDays"] == 0));
                     if(taskKey in tasks) tasks[taskKey]["data"] = d;
-                    else if((!isRepeatedTask && dateDiff==0) || (dateDiff>=0 && repeatToday)) tasks[taskKey] = { "data": d, "persons": [] };
+                    else if((!isRepeatedTask(d) && dateDiff==0) || (dateDiff>=0 && repeatToday)) tasks[taskKey] = { "data": d, "persons": [] };
                 });
             }
-            //console.log(tasks);
+            console.log(tasks);
             callback(tasks);
         });
     });
