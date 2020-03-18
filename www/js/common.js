@@ -49,3 +49,11 @@ function weekDiff(d1, d2) {
     diff /= (60 * 60 * 24 * 7);
     return Math.abs(Math.round(diff));
 }
+
+function isRepeatedTask(task) {
+    return (task["repeatDays"] || task["monthlyRepeatMonths"]);
+}
+
+function isMonthlyRepeated(task) {
+    return task["monthlyRepeatMonths"] ? true: false;
+}
