@@ -1,6 +1,6 @@
 /* global */
 body {
-    font-size: 40px !important;
+    font-size: 24px !important;
     margin: 0;
     padding: 0;
     font-family: "ＭＳ ゴシック",sans-serif;
@@ -49,8 +49,8 @@ div.day-arrow {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     padding: 20px 40px;
-    height: 150px;
-    line-height: 150px;
+    height: 70px;
+    line-height: 70px;
 }
 div.check-kuma {
     padding: 0 10px;
@@ -60,8 +60,8 @@ div.check-kuma:before {
     background-repeat: no-repeat;
     background-position: center;
     vertical-align: middle;
-    width: 130px;
-    height: 100px;
+    width: 100px;
+    height: 70px;
     content: '';
     display: inline-block;
 }
@@ -70,8 +70,8 @@ div.check-kuma.unchecked:before {
     opacity: 0.3;
     filter: grayscale(1);
 }
-div.check-kuma.min:before { background-image: url("/images/minkuma.png"); }
-div.check-kuma.mun:before { background-image: url("/images/munkuma.png"); }
+div.check-kuma.min:before { background-image: url("../images/minkuma.png"); }
+div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
 
 
 /* add-task */
@@ -82,8 +82,8 @@ div.check-kuma.mun:before { background-image: url("/images/munkuma.png"); }
 }
 .picker__input { background-color: #fff !important; }
 .btn {
-    font-size: 36px !important;
-    height: 80px !important;
+    font-size: 24px !important;
+    height: 50px !important;
     padding: 0 30px !important;
 }
 .select-repeat { 

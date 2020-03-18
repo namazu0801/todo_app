@@ -10,12 +10,12 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="/manifest.json">
   <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.7/pwacompat.min.js"></script>
-  <script src="/js/jquery-1.12.4.min.js"></script>
+  <script src="./js/jquery-1.12.4.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
-  <script src="/js/common.js"></script>
-  <script src="/js/db.js"></script>
+  <script src="./js/common.js"></script>
+  <script src="./js/db.js"></script>
   <title>To-Do List</title>
 
   <script>
@@ -32,7 +32,7 @@
 <body>
     <div id="header-menu">
         <div class="left">To-Do List</div>
-        <a href="/add_task.html"><div class="right btn-add-task">＋</div></a>
+        <a href="./add_task.html"><div class="right btn-add-task">＋</div></a>
         <div class="clear"></div>
     </div>
     <div class="left day-arrow prev">◀</div>
@@ -41,7 +41,7 @@
     <div class="clear"></div>
     <table id="task-list">
         <tr><td style="border:none;">
-            <img src="/images/loading.gif" style="width: 100%;" />
+            <img src="./images/loading.gif" style="width: 100%;" />
         </td></tr>
     </table>
 </body>
@@ -66,7 +66,7 @@
             var nextDay = new Date(qDate.setDate(qDate.getDate() + 1));
             var toDate = getStringFromDate(nextDay,"YYYY-MM-DD");
         }
-        window.location.href = `/index.html?date=${toDate}`;
+        window.location.href = `./index.html?date=${toDate}`;
     });
 
     getTasksByDate(qDate, function(tasks){
