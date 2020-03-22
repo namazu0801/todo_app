@@ -22,10 +22,10 @@ p.center {
     background-color: #00BCD4;
     color: white;
     font-weight: bold;
-    padding: 28px 28px 25px 43px;
+    padding: 20px 28px 17px 43px;
     box-sizing: border-box;
-    line-height: 83px;
-    font-size: 35px;
+    line-height: 75px;
+    font-size: 30px;
 }
 div.menu-right {
     display: inline-block;
@@ -116,9 +116,9 @@ div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
     text-decoration: none;
     background: #CDDC39;
     color: #FFF;
-    width: 70px;
-    height: 70px;
-    line-height: 70px;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
     border-radius: 50%;
     text-align: center;
     font-weight: bold;
@@ -126,7 +126,7 @@ div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
     border-bottom: solid 3px #a9b532;
     transition: .4s;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 .btn-add-task:active {
