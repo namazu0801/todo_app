@@ -3,7 +3,7 @@ body {
     font-size: 24px !important;
     margin: 0;
     padding: 0;
-    font-family: "ＭＳ ゴシック",sans-serif;
+    font-family: "ＭＳ ゴシック",sans-serif !important;
 }
 .left { float: left; }
 .right { float: right; }
@@ -111,7 +111,7 @@ div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
     width: 20% !important;
     display: inline !important;
 }
-.btn-add-task {
+.btn-add-task-menu {
     display: inline-block;
     text-decoration: none;
     background: #CDDC39;
@@ -129,7 +129,7 @@ div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
     font-size: 30px;
 }
 
-.btn-add-task:active {
+.btn-add-task-menu:active {
   box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.32);
   background-image: linear-gradient(#e8f757 0%, #e8f757 100%);
 }
