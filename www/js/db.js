@@ -49,12 +49,17 @@ function addTask(data, taskKey=null){
     }
     saveData["monthlyRepeatDay"] = data.monthlyRepeatDay;
     saveData["monthlyRepeatMonths"] = data.monthlyRepeatDay ? data.repeatValue : null;
+    saveData["removed"] = data.removed;
 
     function callbackSuccess(docRef){
         //console.log("Document written with ID: ", docRef.id);
-        console.log(saveData);
-        alert("登録しました");
-        window.location.reload();
+        if(saveData["removed"]){
+            alert("削除しました");
+            window.location.href = "./index.html";
+        } else {
+            alert("登録しました");
+            window.location.reload();
+        }
     }
     function callbackError(error) {
         console.error("Error adding document: ", error);
@@ -99,7 +104,7 @@ function getTasksByDate(qDate, callback){
                     var dateDiff = dayDiff(regDate,qDate);
                     var repeatToday = (isRepeatedTask(d) && (dateDiff % d["repeatDays"] == 0));
                     if(taskKey in tasks) tasks[taskKey]["data"] = d;
-                    else if((!isRepeatedTask(d) && dateDiff==0) || (dateDiff>=0 && repeatToday)) tasks[taskKey] = { "data": d, "persons": [] };
+                    else if( ((!isRepeatedTask(d) && dateDiff==0) || (dateDiff>=0 && repeatToday)) && !d["removed"]) tasks[taskKey] = { "data": d, "persons": [] };
                 });
             }
             console.log(tasks);

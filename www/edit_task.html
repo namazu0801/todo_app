@@ -76,6 +76,7 @@
         <br>
         <div class="form-group">
             <button class="btn btn-primary btn-add-task">登録</button>
+            <button class="btn btn-danger btn-remove-task">削除</button>
         </div>
     </div>
 </body>
@@ -114,7 +115,8 @@
 
         changeRepeatInputsDisability();
         $(".check-repeat").on("click", changeRepeatInputsDisability);
-        $(".btn-add-task").on("click", function(){
+        $(".btn-add-task,.btn-remove-task").on("click", function(){
+            var classes = $(this).attr("class").split(" ");
             var saveData = {};
             saveData["name"] = $(".input-task").val();
             saveData["date"] = $(".input-date").val();
@@ -128,6 +130,7 @@
                 saveData["repeatValue"] = null;
                 saveData["monthlyRepeatDay"] = null;
             }
+            if(classes.indexOf("btn-remove-task") >= 0) saveData["removed"] = true;
             addTask(saveData, taskKey);
         });
     });
