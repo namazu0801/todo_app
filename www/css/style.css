@@ -138,9 +138,9 @@ div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
 }
 
 .btn-add-task{
-    color: #fff;
-    background-color: #00BCD4;
-    border-color: #0097A7;
-    border-bottom: solid 5px #0097A7;
+    color: #fff !important;
+    background-color: #00BCD4 !important;
+    border-color: #0097A7 !important;
+    border-bottom: solid 5px #0097A7 !important;
 }
 
