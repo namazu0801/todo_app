@@ -46,10 +46,12 @@
         <a href="./add_task.html"><div class="right btn-menu-right btn-add-task-menu">＋</div></a>
         <div class="clear"></div>
     </div>
-    <div class="left day-arrow prev">◀</div>
-    <div class="right day-arrow next">▶</div>
-    <p class="center date"></p>
-    <div class="clear"></div>
+    <div id="date-box">
+        <div class="left day-arrow prev">◀</div>
+        <div class="right day-arrow next">▶</div>
+        <p class="center date"></p>
+      <div class="clear"></div>
+    </div>
     <table id="task-list">
         <tr><td style="text-align:center; padding-top: 120px;">
             <img src="./images/loading_02.gif" style="width: 20%;" />
@@ -126,6 +128,19 @@
                 removeDone(qDateStr, taskKey, person, function(){ callback($that, "checked", "unchecked"); });
         });
     });
+</script>
+<script>
+(function(){
+var datebox= document.getElementById("date-box");
+var youbi = document.getElementsByClassName("center date")[0].textContent.split("（")[1].split("）")[0];
+if(youbi==="土"){
+datebox.id="date-box_suturday"
+}else if(youbi==="日"){
+datebox.id="date-box_sunday"
+}else{
+datebox.id="date-box"
+}
+})();
 </script>
 
 </html>
