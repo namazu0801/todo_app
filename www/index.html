@@ -130,17 +130,16 @@
     });
 </script>
 <script>
-(function(){
-var datebox= document.getElementById("date-box");
-var youbi = document.getElementsByClassName("center date")[0].textContent.split("（")[1].split("）")[0];
-if(youbi==="土"){
-datebox.id="date-box_suturday"
-}else if(youbi==="日"){
-datebox.id="date-box_sunday"
-}else{
-datebox.id="date-box"
-}
-})();
+    var datebox = document.getElementById("date-box");
+    var datebox = $("#date-box");
+    var youbi = $(".center.date").eq(0).text().split("（")[1].split("）")[0];
+    if(youbi==="土"){
+        datebox.attr("id", "date-box_saturday");
+    }else if(youbi==="日"){
+        datebox.attr("id", "date-box_sunday");
+    }else{
+        datebox.attr("id", "date-box");
+    }
 </script>
 
 </html>
