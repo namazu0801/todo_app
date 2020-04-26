@@ -60,8 +60,10 @@
 </body>
 <script>
     function changeRowBgColor(){
-        $("#task-list .task").css("background-color", "#fff");
-        $("#task-list .task:has(div.check-kuma.checked)").css("background-color", "#eee");
+        $("#task-list .task").css("color", "rgba(0, 0, 0, 1)");
+        $("#task-list .task:has(div.check-kuma.checked)").css("color", "rgba(0, 0, 0, 0.20)");
+        $("#task-list .task>.left").css("text-decoration", "none");
+        $("#task-list .task:has(div.check-kuma.checked)>.left").css("text-decoration", "line-through");
     }
 </script>
 <script>
@@ -101,7 +103,7 @@
             `;
             rowHTMLAll += rowHTML;
         }
-        if(rowHTMLAll==="") rowHTMLAll = "<tr><td style='border: none'>タスクがありません</td></tr>";
+        if(rowHTMLAll==="") rowHTMLAll = '<tr><td class="notask">タスクがありません</td></tr><tr><td class="notask"><img src="./images/naino_gururi.gif" width="200px"></td></tr>';
         $("#task-list").html(rowHTMLAll); 
         changeRowBgColor();
         $(".task").on("click", function(e){
@@ -130,16 +132,18 @@
     });
 </script>
 <script>
-    var datebox = document.getElementById("date-box");
-    var datebox = $("#date-box");
     var youbi = $(".center.date").eq(0).text().split("（")[1].split("）")[0];
-    if(youbi==="土"){
-        datebox.attr("id", "date-box_saturday");
-    }else if(youbi==="日"){
-        datebox.attr("id", "date-box_sunday");
-    }else{
-        datebox.attr("id", "date-box");
-    }
+    var dateStr = $(".center.date").eq(0).text();
+    var splitIdx = dateStr.indexOf("（");
+    var dateStrFirst = dateStr.slice(0, splitIdx);
+    var dateStrLast = dateStr.slice(splitIdx);
+
+    var dateobj = $(".center.date").eq(0);
+    if(youbi==="土")      var color  = "#03a8f4";
+    else if(youbi==="日") var color  = "#EF5350";
+    var dateStrLastColored = dateStrLast[0] + '<span style="color:' + color + ';">' + youbi + '</span>' + dateStrLast[2];
+    var dateStrColored = dateStrFirst + dateStrLastColored;
+    dateobj.html(dateStrColored);
 </script>
 
 </html>

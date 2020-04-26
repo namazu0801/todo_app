@@ -25,20 +25,22 @@ p.date {
     padding: 30px 40px;
     box-sizing: border-box;
 }
+
 #header-menu {
     width: 100%;
-    background-color: #00BCD4;
+    background-color: #03a8f4;
     color: white;
     font-weight: bold;
     padding: 20px 28px 17px 43px;
     box-sizing: border-box;
     line-height: 75px;
     font-size: 30px;
+    border-top: 15px solid #0487d1;
 }
 div.btn-menu-right {
     display: inline-block;
     text-decoration: none;
-    background: #CDDC39;
+    background: #EF5350;
     color: #FFF;
     width: 70px;
     height: 70px;
@@ -48,14 +50,14 @@ div.btn-menu-right {
     font-weight: bold;
     overflow: hidden;
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
-    border-bottom: solid 3px #a9b532;
+    border-bottom: solid 3px #b5403e;
     transition: .4s;
     font-size: 30px;
 }
 
 .menu-right:active {
   box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.32);
-  background-image: linear-gradient(#e8f757 0%, #e8f757 100%);
+  background-image: linear-gradient(#EF5350 0%, #EF5350 100%);
 }
 
 h1.title {
@@ -67,11 +69,11 @@ h1.title {
 }
 
 #date-box_saturday{
-    background-color: #e1f5fe;
+    color: #03a8f4;
 }
 
 #date-box_sunday{
-    background-color: #ffebee;
+    color: #EF5350;
 }
 
 /* main */
@@ -106,6 +108,7 @@ div.check-kuma:before {
     content: '';
     display: inline-block;
 }
+
 div.check-kuma:before img { width: 100%; }
 div.check-kuma.unchecked:before {
     opacity: 0.3;
@@ -113,6 +116,11 @@ div.check-kuma.unchecked:before {
 }
 div.check-kuma.min:before { background-image: url("../images/minkuma.png"); }
 div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
+
+.notask{
+    text-align: center;
+    padding-top: 1em;
+}
 
 
 /* add-task */
@@ -134,13 +142,20 @@ div.check-kuma.mun:before { background-image: url("../images/munkuma.png"); }
 
 .btn-add-task-menu:active {
   box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.32);
-  background-image: linear-gradient(#e8f757 0%, #e8f757 100%);
+  background-image: linear-gradient(#EF5350 0%, #EF5350 100%);
 }
 
 .btn-add-task{
     color: #fff !important;
-    background-color: #00BCD4 !important;
-    border-color: #0097A7 !important;
-    border-bottom: solid 5px #0097A7 !important;
+    background-color: #03a8f4 !important;
+    border-color: #0487d1 !important;
+    border-bottom: solid 5px #0487d1 !important;
+}
+
+.btn-remove-task{
+    color: #fff !important;
+    background-color: #EF5350 !important;
+    border-color: #bb3e3c !important;
+    border-bottom: solid 5px #bb3e3c !important;
 }
 
